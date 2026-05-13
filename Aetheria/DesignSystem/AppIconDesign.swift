@@ -1,138 +1,156 @@
 import SwiftUI
 
 /// SwiftUI rendering of the AflamMj app icon.
-/// Use the included `#Preview` to export at 1024×1024 — right-click the
-/// preview → "Export Preview…" — then drop the PNG into AppIcon.appiconset.
+/// Open this file in Xcode, right-click the Preview canvas →
+/// "Export Preview…" → save as PNG and drop into AppIcon.appiconset.
 struct AflamMjAppIcon: View {
-    var size: CGFloat = 1024
+    var size: CGFloat = 512
+
+    // Cap blur so the Preview renderer doesn't crash on large sizes
+    private func blur(_ fraction: CGFloat) -> CGFloat {
+        min(size * fraction, 24)
+    }
 
     var body: some View {
+        let violet = Color(red: 0.49, green: 0.27, blue: 0.95)
+        let neon   = Color(red: 0.66, green: 0.35, blue: 1.00)
+        let indigo = Color(red: 0.22, green: 0.18, blue: 0.78)
+        let aqua   = Color(red: 0.35, green: 0.80, blue: 1.00)
+
         ZStack {
-            // Deep cosmic background
+
+            // ── Background ──────────────────────────────────────────────────
+            LinearGradient(
+                colors: [Color(red: 0.06, green: 0.03, blue: 0.16),
+                         Color(red: 0.01, green: 0.01, blue: 0.05)],
+                startPoint: .topLeading, endPoint: .bottomTrailing
+            )
             RadialGradient(
-                colors: [
-                    Color(red: 0.10, green: 0.06, blue: 0.22),
-                    Color(red: 0.02, green: 0.01, blue: 0.06)
-                ],
-                center: .center,
-                startRadius: size * 0.05,
-                endRadius: size * 0.7
+                colors: [Color(red: 0.30, green: 0.10, blue: 0.55).opacity(0.7), .clear],
+                center: UnitPoint(x: 0.5, y: 0.18),
+                startRadius: 0, endRadius: size * 0.65
             )
 
-            // Soft violet aura
-            Circle()
-                .fill(Color(red: 0.49, green: 0.27, blue: 0.95).opacity(0.55))
-                .frame(width: size * 0.55, height: size * 0.55)
-                .blur(radius: size * 0.13)
-                .offset(x: -size * 0.05, y: -size * 0.08)
+            // ── Ambient glow blobs ──────────────────────────────────────────
+            Circle().fill(aqua.opacity(0.18))
+                .frame(width: size * 0.6).blur(radius: blur(0.18))
+                .offset(x: size * 0.22, y: size * 0.28)
+            Circle().fill(violet.opacity(0.45))
+                .frame(width: size * 0.55).blur(radius: blur(0.16))
+                .offset(x: -size * 0.18, y: -size * 0.12)
+            Circle().fill(neon.opacity(0.22))
+                .frame(width: size * 0.38).blur(radius: blur(0.10))
 
-            Circle()
-                .fill(Color(red: 0.22, green: 0.18, blue: 0.78).opacity(0.45))
-                .frame(width: size * 0.45, height: size * 0.45)
-                .blur(radius: size * 0.16)
-                .offset(x: size * 0.12, y: size * 0.18)
+            // ── Film strip bars ─────────────────────────────────────────────
+            RoundedRectangle(cornerRadius: size * 0.012)
+                .fill(Color.white.opacity(0.07))
+                .frame(width: size * 0.78, height: size * 0.07)
+                .offset(y: -size * 0.33)
+            RoundedRectangle(cornerRadius: size * 0.012)
+                .fill(Color.white.opacity(0.07))
+                .frame(width: size * 0.78, height: size * 0.07)
+                .offset(y: size * 0.33)
 
-            // Geometric diamond mark
-            ZStack {
-                RoundedRectangle(cornerRadius: size * 0.06, style: .continuous)
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color(red: 0.66, green: 0.35, blue: 1.00),
-                                Color(red: 0.49, green: 0.27, blue: 0.95),
-                                Color(red: 0.22, green: 0.18, blue: 0.78)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .frame(width: size * 0.46, height: size * 0.46)
-                    .rotationEffect(.degrees(45))
-                    .shadow(color: Color(red: 0.66, green: 0.35, blue: 1.0).opacity(0.7), radius: size * 0.08)
-
-                // Inner glow ring
-                RoundedRectangle(cornerRadius: size * 0.05, style: .continuous)
-                    .strokeBorder(
-                        LinearGradient(
-                            colors: [.white.opacity(0.7), .white.opacity(0.05)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: size * 0.008
-                    )
-                    .frame(width: size * 0.46, height: size * 0.46)
-                    .rotationEffect(.degrees(45))
-
-                // Central "A" mark — bold geometric
-                AflamMjMark()
-                    .fill(
-                        LinearGradient(
-                            colors: [.white, Color(red: 0.92, green: 0.95, blue: 1.0)],
-                            startPoint: .top, endPoint: .bottom
-                        ),
-                        style: FillStyle(eoFill: true)
-                    )
-                    .frame(width: size * 0.22, height: size * 0.28)
-                    .shadow(color: .black.opacity(0.35), radius: size * 0.01, y: size * 0.005)
+            // ── Film strip holes (top) ──────────────────────────────────────
+            HStack(spacing: size * 0.095) {
+                filmHole(size: size)
+                filmHole(size: size)
+                filmHole(size: size)
+                filmHole(size: size)
+                filmHole(size: size)
             }
+            .offset(y: -size * 0.33)
 
-            // Top-left starlight
-            Circle()
-                .fill(.white)
-                .frame(width: size * 0.012, height: size * 0.012)
-                .offset(x: -size * 0.3, y: -size * 0.32)
-                .shadow(color: .white, radius: size * 0.01)
+            // ── Film strip holes (bottom) ───────────────────────────────────
+            HStack(spacing: size * 0.095) {
+                filmHole(size: size)
+                filmHole(size: size)
+                filmHole(size: size)
+                filmHole(size: size)
+                filmHole(size: size)
+            }
+            .offset(y: size * 0.33)
 
+            // ── Glass card ──────────────────────────────────────────────────
+            RoundedRectangle(cornerRadius: size * 0.10, style: .continuous)
+                .fill(LinearGradient(
+                    colors: [Color.white.opacity(0.14), Color.white.opacity(0.04)],
+                    startPoint: .topLeading, endPoint: .bottomTrailing))
+                .frame(width: size * 0.52, height: size * 0.52)
+                .shadow(color: violet.opacity(0.55), radius: min(size * 0.07, 18))
+            RoundedRectangle(cornerRadius: size * 0.10, style: .continuous)
+                .strokeBorder(
+                    LinearGradient(
+                        colors: [Color.white.opacity(0.35), Color.white.opacity(0.05)],
+                        startPoint: .topLeading, endPoint: .bottomTrailing),
+                    lineWidth: size * 0.005)
+                .frame(width: size * 0.52, height: size * 0.52)
+
+            // ── Glow circle ─────────────────────────────────────────────────
             Circle()
-                .fill(.white)
-                .frame(width: size * 0.008, height: size * 0.008)
-                .offset(x: size * 0.28, y: -size * 0.26)
-                .shadow(color: .white, radius: size * 0.008)
+                .fill(LinearGradient(
+                    colors: [neon, violet, indigo],
+                    startPoint: .topLeading, endPoint: .bottomTrailing))
+                .frame(width: size * 0.30)
+                .shadow(color: neon.opacity(0.8), radius: min(size * 0.06, 16))
+
+            // ── Play triangle ───────────────────────────────────────────────
+            PlayTriangle()
+                .fill(Color.white)
+                .frame(width: size * 0.12, height: size * 0.13)
+                .offset(x: size * 0.012)
+
+            // ── Outer glow ring ─────────────────────────────────────────────
+            Circle()
+                .strokeBorder(
+                    AngularGradient(
+                        colors: [neon.opacity(0.8), violet.opacity(0.4),
+                                 aqua.opacity(0.5), neon.opacity(0.1), neon.opacity(0.8)],
+                        center: .center),
+                    lineWidth: size * 0.006)
+                .frame(width: size * 0.63)
+
+            // ── Stars ───────────────────────────────────────────────────────
+            Circle().fill(Color.white.opacity(0.9))
+                .frame(width: size * 0.013)
+                .offset(x: -size * 0.32, y: -size * 0.30)
+            Circle().fill(Color.white.opacity(0.7))
+                .frame(width: size * 0.009)
+                .offset(x: size * 0.30, y: -size * 0.24)
+            Circle().fill(Color.white.opacity(0.6))
+                .frame(width: size * 0.007)
+                .offset(x: -size * 0.26, y: size * 0.31)
+            Circle().fill(Color.white.opacity(0.5))
+                .frame(width: size * 0.006)
+                .offset(x: size * 0.34, y: size * 0.27)
         }
         .frame(width: size, height: size)
         .clipShape(RoundedRectangle(cornerRadius: size * 0.22, style: .continuous))
     }
 }
 
-/// Geometric "A" mark — two diagonals + cross-bar, drawn as a single path.
-private struct AflamMjMark: Shape {
+private func filmHole(size: CGFloat) -> some View {
+    RoundedRectangle(cornerRadius: size * 0.007)
+        .fill(Color.white.opacity(0.14))
+        .frame(width: size * 0.046, height: size * 0.036)
+}
+
+private struct PlayTriangle: Shape {
     func path(in rect: CGRect) -> Path {
         var p = Path()
-        let w = rect.width
-        let h = rect.height
-        let stroke = w * 0.18
-        let apex   = CGPoint(x: rect.midX, y: rect.minY)
-        let leftB  = CGPoint(x: rect.minX, y: rect.maxY)
-        let rightB = CGPoint(x: rect.maxX, y: rect.maxY)
-
-        // Outer triangle
-        p.move(to: apex)
-        p.addLine(to: leftB)
-        p.addLine(to: rightB)
+        p.move(to:    CGPoint(x: rect.minX, y: rect.minY))
+        p.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+        p.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
         p.closeSubpath()
-
-        // Inner hole — smaller triangle, leaves the "A" outline
-        let inset: CGFloat = stroke
-        var inner = Path()
-        inner.move(to: CGPoint(x: rect.midX, y: rect.minY + inset * 1.4))
-        inner.addLine(to: CGPoint(x: rect.minX + inset, y: rect.maxY - inset * 0.6))
-        inner.addLine(to: CGPoint(x: rect.maxX - inset, y: rect.maxY - inset * 0.6))
-        inner.closeSubpath()
-        p.addPath(inner)
-
-        // Cross-bar gap — punched as a rectangle
-        let barY = rect.minY + h * 0.62
-        let barRect = CGRect(x: rect.minX + inset * 1.6, y: barY,
-                             width: w - inset * 3.2, height: stroke * 0.7)
-        p.addRect(barRect)
-
         return p
     }
 }
 
-#Preview("App Icon — 1024") {
-    AflamMjAppIcon(size: 1024)
-        .frame(width: 1024, height: 1024)
+// MARK: - Previews
+
+#Preview("App Icon — 120") {
+    AflamMjAppIcon(size: 120)
+        .frame(width: 120, height: 120)
         .background(.black)
 }
 
