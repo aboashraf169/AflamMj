@@ -1,20 +1,20 @@
-# AflamMj
+# AflamMj — أفلام MJ
 
 A modern iOS streaming app built with SwiftUI, powered by the TMDB API.
 
+---
+
 ## Screenshots
 
-| Home | Home (Scroll) | Details |
-|------|--------------|---------|
-| ![Home](screenshots/01_home.png) | ![Home Scroll](screenshots/02_home_scroll.png) | ![Details](screenshots/03_details.png) |
+**Home** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Home (Scroll)** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Details** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Details (More)**
 
-| Details (More) | Player | Search |
-|----------------|--------|--------|
-| ![Details More](screenshots/04_details_more.png) | ![Player](screenshots/05_player.png) | ![Search](screenshots/06_search.png) |
+<img src="screenshots/01_home.png" width="23%"> <img src="screenshots/02_home_scroll.png" width="23%"> <img src="screenshots/03_details.png" width="23%"> <img src="screenshots/04_details_more.png" width="23%">
 
-| Saved | Settings |
-|-------|----------|
-| ![Saved](screenshots/07_saved.png) | ![Settings](screenshots/08_settings.png) |
+---
+
+**Player** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Search** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Saved** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Settings**
+
+<img src="screenshots/05_player.png" width="23%"> <img src="screenshots/06_search.png" width="23%"> <img src="screenshots/07_saved.png" width="23%"> <img src="screenshots/08_settings.png" width="23%">
 
 ---
 
